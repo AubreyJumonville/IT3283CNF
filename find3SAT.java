@@ -32,7 +32,7 @@ public class find3SAT {
             ArrayList<Integer> maximumClique = r.toMaxClique(r.toCliqueProblem(vertexCover));
 
             // determine if there is an answer based on size of clique in relation to k
-            if (maximumClique.size() >= (variables + (current.size() / 3 * 2))) {
+            if (maximumClique.size() > (variables + (current.size() / 3 * 2))) {
                 answer = false;
             }
 
