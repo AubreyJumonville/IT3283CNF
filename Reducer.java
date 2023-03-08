@@ -7,7 +7,8 @@ public class Reducer {
     public Reducer() {
 
     }
-
+    static int max;
+    static ArrayList<Integer> flist = new ArrayList<>();
     public int[][] toVertexCover(ArrayList<Integer> cnf, int variables) {
         int n = (variables) + cnf.size();
         //initialize matrix that represents graph
@@ -73,15 +74,66 @@ public class Reducer {
 
     public ArrayList<Integer> toMaxClique(int[][] graph) {
         ArrayList<Integer> maximalClique = new ArrayList<>();
-
-        /*
-         * 
-         * IMPLEMENT FORMULA HERE
-         * 
-         */
-
+        max = 0;
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(0);
+        maxClique(graph,list,0,1);
+        maximalClique = flist;
 
         return maximalClique;
+    }
+
+    public ArrayList<Integer> maxClique(int[][] graph,ArrayList<Integer> list,int i,int v){
+       int n = graph.length;
+       int tempmax;
+       ArrayList<Integer> test = flist;
+        for (int j = i+1; j<n; j++){
+            if (list.size()<(v+1))
+            {
+                list.add(j);
+            }
+            else
+            {
+                if (list.size()>v+1)
+                {
+                    list.remove(v+1);
+                }
+                list.set(v,j);
+            }
+            
+            if(isclique(list,graph)){
+                if (max < v)
+                {
+                    max = v;
+                }
+                tempmax = maxClique(graph,list,j,v+1).size();
+                if (max < tempmax)
+                {
+                    max = tempmax;
+                    flist = list;
+                }
+            }
+        }
+        return list;
+    }
+
+    static boolean isclique(ArrayList<Integer> list, int[][] graph){
+        int size = list.size();
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++) {
+                if (i != j){
+                    
+                    if (graph[list.get(i)][list.get(j)] == 0)
+                    {
+                        return false;
+                    }
+                    
+                }
+                
+            }
+        }
+        return true;
     }
 
 }
