@@ -7,8 +7,10 @@ public class Reducer {
     public Reducer() {
 
     }
+
     static int max;
     static ArrayList<Integer> flist = new ArrayList<>();
+
     public int[][] toVertexCover(ArrayList<Integer> cnf, int variables) {
         int n = (variables) + cnf.size();
         //initialize matrix that represents graph
@@ -55,7 +57,7 @@ public class Reducer {
     public int[][] toCliqueProblem(int[][] graphMatrix) {
 
         int n = graphMatrix.length;
-        //creat matrix of same size to store inverted
+        //create matrix of same size to store inverted
         int[][] inverseMatrix = new int[n][n];
 
         //invert matrix
