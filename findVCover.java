@@ -38,7 +38,7 @@ public class findVCover {
 
             //does final print out
             System.out.print("G" + (i + 1) + " ( " + v + ", " + e + ") ( size=" + (v - points.size()) + " ms=" + ms + ") {");
-            for (int j = 0; j <= v; j++) {
+            for (int j = 0; j < v; j++) {
                 if (!points.contains(j)) {
                     System.out.print(j);
                     System.out.print(",");
