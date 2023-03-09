@@ -30,7 +30,7 @@ public class find3SAT {
             ArrayList<Integer> maximumClique = r.toMaxClique(r.toCliqueProblem(vertexCover));
 
             // determine if there is an answer based on size of clique in relation to k
-            if (((variables*2 + current.size())- maximumClique.size()) > (variables + (current.size() / 3 * 2))) {
+            if (((variables * 2 + current.size()) - maximumClique.size()) > (variables + (current.size() / 3 * 2))) {
                 answer = false;
             }
 
@@ -40,7 +40,7 @@ public class find3SAT {
                 for (int j = 0; j < maximumClique.size(); j++) {
                     int temp = maximumClique.get(j);
                     if (temp < variables * 2) {
-                        if(temp%2 == 0){
+                        if (temp % 2 == 0) {
                             assignments[temp / 2] = 1;
                         } else {
                             assignments[temp / 2] = 2;
@@ -103,29 +103,17 @@ public class find3SAT {
 
             System.out.print(" ==>\n");
 
-            System.out.print("(");
-            if (assignments[0] == 0) {
-                System.out.print(" X");
-            } else if (assignments[Math.abs(current.get(0)) - 1] == 1 && current.get(0) > 0
-                    || assignments[Math.abs(current.get(0)) - 1] == 1 && current.get(0) < 0) {
-                System.out.print(" T");
-            } else {
-                System.out.print(" F");
-            }
-            System.out.print("|");
-            for (int z = 1; z < current.size(); z++) {
+            for (int z = 0; z < current.size(); z++) {
                 int value = Math.abs(current.get(z)) - 1;
-                if (z % 3 == 0) {
-                    System.out.print("∧(");
+                if (z == 0) {
+                    System.out.print("(");
                 }
-                if (assignments[value] == 0) {
-                    System.out.print(" X");
-                } else if (assignments[value] == 1 && current.get(z) > 0
-                        || assignments[value] == 1 && current.get(z) < 0) {
-                    System.out.print(" T");
-                } else {
-                    System.out.print(" F");
+                else if (z % 3 == 0) {
+                        System.out.print("∧(");
                 }
+                
+                System.out.print(getSymbol(assignments, value, current.get(z)));
+
                 if (z % 3 == 2) {
                     System.out.print(")");
                 } else {
@@ -138,5 +126,18 @@ public class find3SAT {
 
         }
         return;
+    }
+    
+    private static String getSymbol(int[] assignments, int absValue, int value ) {
+        String symbol = "X";
+        if (assignments[absValue] == 0) {
+           symbol = " X";
+        } else if (assignments[absValue] == 1 && value > 0
+                || assignments[absValue] == 2 && value < 0) {
+            symbol =" T";
+        } else {
+            symbol =" F";
+        }
+        return symbol;
     }
 }
