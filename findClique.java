@@ -20,7 +20,7 @@ public class findClique {
              int v = current.length;
            int e = 0;
            for (int j = 0; j < v; j++) {
-               for (int k = j+1; k < v; k++) {
+               for (int k = j   + 1; k < v; k++) {
                    if (current[j][k] == 1) {
                        e++;
                    }

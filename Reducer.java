@@ -62,7 +62,7 @@ public class Reducer {
         //invert matrix
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                if (graphMatrix[i][j] == 0) {
+                if (graphMatrix[i][j] == 0 || i == j) {
                     inverseMatrix[i][j] = 1;
                 } else {
                     inverseMatrix[i][j] = 0;
