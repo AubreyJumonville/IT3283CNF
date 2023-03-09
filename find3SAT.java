@@ -23,14 +23,14 @@ public class find3SAT {
             boolean answer = true;
             // start timer
             long startTime = System.currentTimeMillis();
-            ArrayList<Integer> current = cnfs.get(0);
+            ArrayList<Integer> current = cnfs.get(i);
             // reduce to vertex cover
             int variables = Collections.max(current);
             int[][] vertexCover = r.toVertexCover(current, variables * 2);
             ArrayList<Integer> maximumClique = r.toMaxClique(r.toCliqueProblem(vertexCover));
 
             // determine if there is an answer based on size of clique in relation to k
-            if (maximumClique.size() > (variables + (current.size() / 3 * 2))) {
+            if (((variables*2 + current.size())- maximumClique.size()) > (variables + (current.size() / 3 * 2))) {
                 answer = false;
             }
 
@@ -40,7 +40,11 @@ public class find3SAT {
                 for (int j = 0; j < maximumClique.size(); j++) {
                     int temp = maximumClique.get(j);
                     if (temp < variables * 2) {
-                        assignments[temp / 2] = (temp % 2) + 1;
+                        if(temp%2 == 0){
+                            assignments[temp / 2] = 1;
+                        } else {
+                            assignments[temp / 2] = 2;
+                        }
                     } else {
                         break;
                     }
