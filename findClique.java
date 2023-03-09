@@ -36,7 +36,7 @@ public class findClique {
             //does final print out
             System.out.print("G" + i + " ( " + v + ", " + e + ") ( size=" + points.size() + " ms=" + ms + ") {");
             for (int j = 0; j < points.size(); j++) {
-                System.out.print(points.get(i) + ",");
+                System.out.print(points.get(j) + ",");
             }
             System.out.print("}\n");
         }
