@@ -11,13 +11,12 @@ public class FileReader {
 
     public FileReader(String fileName) {
         File file = new File(fileName);
-    try {
-        fis = new FileInputStream(file);
-       reader = new BufferedReader(new InputStreamReader(fis));
-   } catch (Exception e) {
-       System.out.println("could not open file");
-   }
-       
+        try {
+            fis = new FileInputStream(file);
+        reader = new BufferedReader(new InputStreamReader(fis));
+        } catch (Exception e) {
+            System.out.println("could not open file");
+        }
     }
 
     public ArrayList<int[][]> graph() {

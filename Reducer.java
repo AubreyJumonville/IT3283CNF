@@ -79,7 +79,7 @@ public class Reducer {
         max = 0;
         ArrayList<Integer> list = new ArrayList<>();
         list.add(0);
-        maxClique(graph,list,0,1);
+        maximalClique = maxClique(graph,list,0,1);
         maximalClique = flist;
 
         return maximalClique;
@@ -88,6 +88,7 @@ public class Reducer {
     public ArrayList<Integer> maxClique(int[][] graph,ArrayList<Integer> list,int i,int v){
        int n = graph.length;
        int tempmax;
+       
        ArrayList<Integer> test = flist;
         for (int j = i+1; j<n; j++){
             if (list.size()<(v+1))
