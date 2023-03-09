@@ -1,4 +1,3 @@
-package groupAssignment;
 
 import java.util.*;
 
@@ -7,9 +6,9 @@ public class Reducer {
     public Reducer() {
 
     }
-
-    static int max;
-    static ArrayList<Integer> flist = new ArrayList<>();
+    static int globalMax;
+    static ArrayList<Integer> finalclique = new ArrayList<Integer>();
+    static ArrayList<Integer> templist = new ArrayList<Integer>();
 
     public int[][] toVertexCover(ArrayList<Integer> cnf, int variables) {
         int n = (variables) + cnf.size();
@@ -75,51 +74,57 @@ public class Reducer {
     }
 
     public ArrayList<Integer> toMaxClique(int[][] graph) {
-        ArrayList<Integer> maximalClique = new ArrayList<>();
-        max = 0;
-        ArrayList<Integer> list = new ArrayList<>();
-        list.add(0);
-        maximalClique = maxClique(graph,list,0,1);
-        maximalClique = flist;
 
-        return maximalClique;
+        //initializes global variables
+        globalMax = 0;
+        finalclique = new ArrayList<Integer>();
+        templist = new ArrayList<Integer>();
+        templist.add(0);
+
+        maxClique(graph,0,1);
+
+        return finalclique;
     }
 
-    public ArrayList<Integer> maxClique(int[][] graph,ArrayList<Integer> list,int i,int v){
+    //Finds every clique in the graph. If the current clique is larger than the minimum, that clique is copied to the final list.
+    public void maxClique(int[][] graph,int i,int v){
        int n = graph.length;
-       int tempmax;
        
-       ArrayList<Integer> test = flist;
         for (int j = i+1; j<n; j++){
-            if (list.size()<(v+1))
+
+            //Adds J to the temp list if the current size of the list isn't enough to accomadte the target position of the new vertex
+            if (templist.size()<(v+1))
             {
-                list.add(j);
+                templist.add(j);
             }
             else
             {
-                if (list.size()>v+1)
+                //Replaces an entry with the current vertex J. If the target index of the vertex is before the end of the list, an entry is removed
+                if (templist.size()>v+1)
                 {
-                    list.remove(v+1);
+                    templist.remove(v+1);
                 }
-                list.set(v,j);
+                templist.set(v,j);
             }
             
-            if(isclique(list,graph)){
-                if (max < v)
+            //Checks if the current list of vertices is a clique
+            if(isclique(templist,graph)){
+                //if the size of clique is bigger than the global max, the list is copied into the final list and the global max is updated
+                if (templist.size()>globalMax)
                 {
-                    max = v;
+                    finalclique = new ArrayList<Integer>(templist);
+                    globalMax = templist.size();
                 }
-                tempmax = maxClique(graph,list,j,v+1).size();
-                if (max < tempmax)
-                {
-                    max = tempmax;
-                    flist = list;
-                }
+                
+                //runs maxClique recursively with v incremented by one to see if the clique can be bigger
+                maxClique(graph,j,v+1);
             }
         }
-        return list;
+        
     }
 
+    //Checks to see if every vertex in the the list to see if it connects to every other vertex in the list. 
+    //Returns false as soon as one of the vertices is not connected to another.
     static boolean isclique(ArrayList<Integer> list, int[][] graph){
         int size = list.size();
         for (int i = 0; i < size; i++)
@@ -131,9 +136,7 @@ public class Reducer {
                     {
                         return false;
                     }
-                    
                 }
-                
             }
         }
         return true;

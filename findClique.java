@@ -1,5 +1,3 @@
-package groupAssignment;
-
 import java.util.ArrayList;
 
 public class findClique {
@@ -17,13 +15,13 @@ public class findClique {
             //starts timer
             long startTime = System.currentTimeMillis();
 
-           int[][] current = graphs.get(i);
+            int[][] current = graphs.get(i);
 
-           int v = current.length;
+             int v = current.length;
            int e = 0;
            for (int j = 0; j < v; j++) {
-               for (int k = 0; k < v; k++) {
-                   if (current[j][k] == 0) {
+               for (int k = j+1; k < v; k++) {
+                   if (current[j][k] == 1) {
                        e++;
                    }
                }
@@ -34,9 +32,12 @@ public class findClique {
             long ms = System.currentTimeMillis() - startTime;
 
             //does final print out
-            System.out.print("G" + i + " ( " + v + ", " + e + ") ( size=" + points.size() + " ms=" + ms + ") {");
+            System.out.print("G" + (i + 1) + " ( " + v + ", " + e + ") ( size=" + points.size() + " ms=" + ms + ") {");
             for (int j = 0; j < points.size(); j++) {
-                System.out.print(points.get(i) + ",");
+                System.out.print(points.get(j));
+                if(j != points.size() -1){
+                    System.out.print(",");
+                }
             }
             System.out.print("}\n");
         }

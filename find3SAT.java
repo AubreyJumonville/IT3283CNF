@@ -1,5 +1,3 @@
-package groupAssignment;
-
 import java.util.*;
 
 public class find3SAT {
