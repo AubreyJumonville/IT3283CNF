@@ -28,15 +28,17 @@ public class find3SAT {
             int variables = Collections.max(current);
             int[][] vertexCover = r.toVertexCover(current, variables * 2);
 
-            // for (int j = 0; j < vertexCover.length; j++) {
-            //     for (int k = 0; k < vertexCover.length; k++) {
-            //         System.out.print(vertexCover[j][k] + " ");
-            //     }
-            //     System.out.print("\n");
-            // }
+            for (int j = 0; j < vertexCover.length; j++) {
+                 for (int k = 0; k < vertexCover.length; k++) {
+                     System.out.print(vertexCover[j][k] + " ");
+                 }
+                 System.out.print("\n");
+            }
 
             int[][] cliqueProblem = r.toCliqueProblem(vertexCover);
             ArrayList<Integer> maximumClique = r.toMaxClique(cliqueProblem);
+
+            System.out.println(maximumClique.toString());
 
             // determine if there is an answer based on size of clique in relation to k
             if (((variables * 2 + current.size()) - maximumClique.size()) > (variables + (current.size() / 3 * 2))) {
@@ -46,16 +48,17 @@ public class find3SAT {
             int[] assignments = new int[variables];
 
             if (answer) {
-                for (int j = 0; j < maximumClique.size(); j++) {
-                    int temp = maximumClique.get(j);
-                    if (temp < variables * 2) {
-                        if (temp % 2 == 0) {
-                            assignments[temp / 2] = 1;
+                for (int j = 0; j < variables * 2; j+=2) {
+                    if (!maximumClique.contains(j)) {
+                        if (!maximumClique.contains(j + 1)) {
+                            assignments[j / 2] = 0;
+                        } else if (j % 2 == 0) {
+                            assignments[j / 2] = 1;
                         } else {
-                            assignments[temp / 2] = 2;
+                            assignments[j / 2] = 2;
                         }
                     } else {
-                        break;
+                        assignments[j / 2] = 2;
                     }
                 }
             } else {
