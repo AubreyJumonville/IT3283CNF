@@ -96,7 +96,7 @@ public class Reducer {
             templist = new ArrayList<Integer>();
             templist.add(i);
 
-            maxClique(graph, i, i+1);
+            maxClique(graph, i, 1);
         }
         return finalclique;
     }
