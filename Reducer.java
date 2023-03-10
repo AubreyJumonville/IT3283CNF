@@ -34,7 +34,20 @@ public class Reducer {
                 } else {
                     graphMatrix[i][j] = 0;
                 }
+            } 
+            if (i >= variables) {
+                if ((i - variables) % 3 == 0) {
+                    graphMatrix[i][i + 1] = 1;
+                    graphMatrix[i][i + 2] = 1;
+                } else if ((i - variables) % 3 == 1) {
+                    graphMatrix[i][i + 1] = 1;
+                    graphMatrix[i][i - 1] = 1;
+                } else {
+                    graphMatrix[i][i - 1] = 1;
+                    graphMatrix[i][i - 2] = 1;
+                }
             }
+            graphMatrix[i][i] = 1;
         }
         return graphMatrix;
     }
@@ -78,11 +91,13 @@ public class Reducer {
         //initializes global variables
         globalMax = 0;
         finalclique = new ArrayList<Integer>();
-        templist = new ArrayList<Integer>();
-        templist.add(0);
 
-        maxClique(graph,0,1);
+        for (int i = 0; i < graph.length - 1; i++) {
+            templist = new ArrayList<Integer>();
+            templist.add(i);
 
+            maxClique(graph, i, i+1);
+        }
         return finalclique;
     }
 
@@ -130,8 +145,7 @@ public class Reducer {
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++) {
-                if (i != j){
-                    
+                if (i != j){   
                     if (graph[list.get(i)][list.get(j)] == 0)
                     {
                         return false;

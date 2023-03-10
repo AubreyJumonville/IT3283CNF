@@ -27,7 +27,16 @@ public class find3SAT {
             // reduce to vertex cover
             int variables = Collections.max(current);
             int[][] vertexCover = r.toVertexCover(current, variables * 2);
-            ArrayList<Integer> maximumClique = r.toMaxClique(r.toCliqueProblem(vertexCover));
+
+            // for (int j = 0; j < vertexCover.length; j++) {
+            //     for (int k = 0; k < vertexCover.length; k++) {
+            //         System.out.print(vertexCover[j][k] + " ");
+            //     }
+            //     System.out.print("\n");
+            // }
+
+            int[][] cliqueProblem = r.toCliqueProblem(vertexCover);
+            ArrayList<Integer> maximumClique = r.toMaxClique(cliqueProblem);
 
             // determine if there is an answer based on size of clique in relation to k
             if (((variables * 2 + current.size()) - maximumClique.size()) > (variables + (current.size() / 3 * 2))) {
@@ -51,8 +60,8 @@ public class find3SAT {
                 }
             } else {
                 Random rd = new Random();
-                for (int j = 0; j < variables; j++) {
-                    assignments[j] = ((rd.nextInt() % 2) + 1);
+                for (int j = 0; j < assignments.length; j++) {
+                    assignments[j] = ((rd.nextInt(2) % 2) + 1);
                 }
             }
 
